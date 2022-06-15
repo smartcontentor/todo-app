@@ -3,8 +3,8 @@ import "./Todo.css";
 
 function Todo({ todo, onDeleteTodo, onChangeStatus }) {
   return (
-    <li className={todo.status}>
-      <span onClick={() => onChangeStatus(todo.id)}>{todo.text}</span>
+    <li className={todo.status} onDoubleClick={() => onChangeStatus(todo.id)}>
+      <span>{todo.text}</span>
       <i
         className="fa-solid fa-trash-can"
         onClick={() => onDeleteTodo(todo.id)}
