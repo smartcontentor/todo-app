@@ -22,21 +22,6 @@ function App() {
   const deleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id != id));
   };
-  const setNewInputText = (e) => {
-    setNewTodoText(e.target.value);
-  };
-  const AddNewTodo = (e) => {
-    e.preventDefault();
-    setTodos((previousState) => [
-      ...previousState,
-      {
-        id: Date.now() + "",
-        text: newTodoText,
-        status: "todo",
-      },
-    ]);
-    e.target[0].value = "";
-  };
   const onChangeStatus = (id) => {
     let changedTodos = todos.filter((todo) =>
       todo.id == id
@@ -45,6 +30,24 @@ function App() {
     );
     setTodos(changedTodos);
     console.log(todos);
+  };
+  const setNewInputText = (e) => {
+    setNewTodoText(e.target.value);
+  };
+  const AddNewTodo = (e) => {
+    e.preventDefault();
+    if (newTodoText) {
+      setTodos((previousState) => [
+        ...previousState,
+        {
+          id: Date.now() + "",
+          text: newTodoText,
+          status: "todo",
+        },
+      ]);
+      e.target[0].value = "";
+    }
+    setNewTodoText("");
   };
   return (
     <div className="App">
