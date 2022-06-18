@@ -1,6 +1,8 @@
-import "./TodoList.css";
 import React from "react";
+
+import "./TodoList.css";
 import Todo from "./Todo";
+
 
 function TodoList({ todos, onDeleteTodo, onChangeStatus }) {
   return (

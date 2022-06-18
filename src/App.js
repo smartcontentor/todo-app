@@ -1,62 +1,80 @@
-import "./App.css";
-import { useState } from "react";
-import TodoList from "./TodoList";
-import TodoInput from "./TodoInput";
+import { useCallback, useState } from "react";
 
-// setTodos((previousState) => ({ ...previousState, status: done }));
+import "./App.css";
+import TodoList from "./TodoList";
+
 
 function App() {
   const [todos, setTodos] = useState([
     {
       id: "1",
       text: "buy some stuff",
-      status: "done",
+      isDone: true,
     },
     {
       id: "2",
       text: "finish home work",
-      status: "todo",
+      isDone: false,
     },
   ]);
   const [newTodoText, setNewTodoText] = useState("");
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-  const onChangeStatus = (id) => {
-    let changedTodos = todos.filter((todo) =>
-      todo.id === id
-        ? (todo.status = todo.status === "done" ? "todo" : "done")
-        : todo
+  const handleDeleteTodo = useCallback(
+    (id) =>
+      setTodos((previousTodos) =>
+        previousTodos.filter((todo) => todo.id !== id)
+      ),
+    []
+  );
+  const handleChangeStatus = useCallback((id) => {
+    setTodos((previousTodos) =>
+      previousTodos.map((todo) =>
+        todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+      )
     );
-    setTodos(changedTodos);
-    console.log(todos);
-  };
-  const setNewInputText = (e) => {
-    setNewTodoText(e.target.value);
-  };
-  const AddNewTodo = (e) => {
-    e.preventDefault();
-    if (newTodoText) {
-      setTodos((previousState) => [
-        ...previousState,
-        {
-          id: Date.now() + "",
-          text: newTodoText,
-          status: "todo",
-        },
-      ]);
-      e.target[0].value = "";
-    }
-    setNewTodoText("");
-  };
+  }, []);
+  const handleNewTodoText = useCallback((e) => {
+    setNewTodoText(() => e.target.value);
+  }, []);
+  const handleNewTodo = useCallback((e) => {
+      e.preventDefault();
+      if (newTodoText) {
+        setTodos((previousTodos) => [
+          ...previousTodos,
+          {
+            id: Date.now().toString(),
+            text: newTodoText,
+            isDone: false,
+          },
+        ]);
+      }
+      setNewTodoText(() => "");
+    },
+    [newTodoText]
+  );
   return (
     <div className="App">
-        <TodoInput setNewInputText={setNewInputText} AddNewTodo={AddNewTodo} />
+      <main className="todos">
+        <form className="new-todo-form" onSubmit={handleNewTodo}>
+          <input
+            type="text"
+            placeholder="Enter Todo Text"
+            className="todo-text-input"
+            onChange={handleNewTodoText}
+            value={newTodoText}
+          />
+          <input
+            type="submit"
+            value="Add New"
+            className="btn-add"
+            onClick={handleNewTodo}
+          />
+        </form>
         <TodoList
           todos={todos}
-          onDeleteTodo={deleteTodo}
-          onChangeStatus={onChangeStatus}
+          onDeleteTodo={handleDeleteTodo}
+          onChangeStatus={handleChangeStatus}
         />
+      </main>
     </div>
   );
 }
