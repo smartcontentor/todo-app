@@ -20,12 +20,12 @@ function App() {
   ]);
   const [newTodoText, setNewTodoText] = useState("");
   const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id != id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
   const onChangeStatus = (id) => {
     let changedTodos = todos.filter((todo) =>
-      todo.id == id
-        ? (todo.status = todo.status == "done" ? "todo" : "done")
+      todo.id === id
+        ? (todo.status = todo.status === "done" ? "todo" : "done")
         : todo
     );
     setTodos(changedTodos);
@@ -51,12 +51,12 @@ function App() {
   };
   return (
     <div className="App">
-      <TodoInput setNewInputText={setNewInputText} AddNewTodo={AddNewTodo} />
-      <TodoList
-        todos={todos}
-        onDeleteTodo={deleteTodo}
-        onChangeStatus={onChangeStatus}
-      />
+        <TodoInput setNewInputText={setNewInputText} AddNewTodo={AddNewTodo} />
+        <TodoList
+          todos={todos}
+          onDeleteTodo={deleteTodo}
+          onChangeStatus={onChangeStatus}
+        />
     </div>
   );
 }
