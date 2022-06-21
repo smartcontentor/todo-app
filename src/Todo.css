@@ -1,20 +1,38 @@
-li {
-  background-color: white;
+.todo {
+  background-color: #ffffff;
   width: 80vw;
   padding: 25px 30px;
   margin: 25px 0;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: var(--regular-shadow);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-left: 5px solid transparent;
 }
 
-li.done {
-  border-left: 5px solid #4caf50;
+.todo-checkbox{
+  transform: scale(1.2);
 }
 
-li i {
-  color: #f44336;
+.todo-checkbox:checked{
+  accent-color: var(--primary-color);
+}
+
+.todo-text{
+  flex: 1 0 auto;
+  margin-left: 7px;
+}
+
+.todo-text.line-through{
+  text-decoration: line-through;
+}
+
+.todo.done {
+  border-left-color: var(--primary-color);
+}
+
+.todo i {
+  color: var(--error-color);
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 18px;
 }
